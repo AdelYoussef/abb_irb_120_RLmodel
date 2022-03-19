@@ -1,0 +1,50 @@
+irb120: #namespace
+
+    n_actions: 12
+    control_type: "velocity"
+
+    #environment variables
+    min_joint_1_angle: -2.87979
+    min_joint_2_angle: -1.91986
+    min_joint_3_angle: -1.91986
+    min_joint_4_angle: -2.79253
+    min_joint_5_angle: -2.094395
+    min_joint_6_angle: -6.98132
+
+    max_joint_1_angle: 2.87979
+    max_joint_2_angle: 1.91986
+    max_joint_3_angle: 1.22173
+    max_joint_4_angle: 2.79253
+    max_joint_5_angle: 2.094395
+    max_joint_6_angle: 6.98132
+    
+    # those parameters are very important. They are affecting the learning experience
+    # They indicate how fast the control can be
+    # If the running step is too large, then there will be a long time between 2 ctrl commans
+    # If the pos_step is too large, then the changes in position will be very abrupt
+    running_step: 0.3 # amount of time the control will be executed
+    pos_step: 0.1    # increment in position for each command
+    
+    #qlearn parameters
+    alpha: 0.1
+    gamma: 0.7
+    epsilon: 0.9
+    epsilon_discount: 0.999
+    nepisodes: 200
+    nsteps: 1000
+    number_splits: 10 #set to change the number of state splits for the continuous problem and also the number of env_variable splits
+
+    init_pos: [0, 0, 0, 0, 0, 0] # Position in which the base will start
+    wait_time: 0.1 # Time to wait in the reset phases
+
+    controllers_list: ["gripper_controller"
+             ,"joint_1_position_controller"
+             ,"joint_2_position_controller"
+             ,"joint_3_position_controller"
+             ,"joint_4_position_controller"
+             ,"joint_5_position_controller"
+             ,"joint_6_position_controller"
+             ,"joint_state_controller"]
+
+
+

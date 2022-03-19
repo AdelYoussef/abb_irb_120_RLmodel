@@ -1,0 +1,11 @@
+<launch>
+
+    <!-- Launch the training world -->
+    <include file="$(find abb_irb120_description)/launch/main.launch" />
+
+    <!-- load the configuration parameters -->
+    <rosparam command="load" file="$(find abb_irb120_training)/config/irb120_params.yaml" />
+
+    <!-- Launch the training system script -->
+    <node pkg="abb_irb120_training" name="abb_irb120_gym" type="actor_critic.py" output="screen"/>
+</launch>

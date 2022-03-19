@@ -1,0 +1,39 @@
+<launch>
+    <!-- load controller configuration to the ros parameter server -->
+  <arg name="use_gui" default="false" />
+
+  <!-- Gazebo specific options -->
+  <arg name="gazebo_gui" default="true"/>
+  <arg name="paused" default="false"/>  
+  <arg name="debug" default="false" />
+
+    <!-- launch the custom world -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+        <!--<arg name="paused" value="True"/>-->
+        <!--arg name="use_sim_time" value="False" /-->
+        <arg name="world_name" value="$(find abb_irb120_description)/worlds/null.world"/>
+    </include>
+    <!-- spawn the abb_irb120 construct -->
+    <include file="$(find abb_irb120_description)/launch/spawn_abb_irb120.launch"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
+
+  <include file="$(find abb_irb120_description)/launch/ros_controllers.launch">
+  </include> 
+
+  <!-- We do not have a robot connected, so publish fake joint states -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="$(arg use_gui)"/>
+    <rosparam param="source_list">[/joint_states]</rosparam>
+  </node>
+  
+  <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find abb_irb120_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>  
+
+</launch>
