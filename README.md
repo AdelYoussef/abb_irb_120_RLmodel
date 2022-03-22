@@ -11,3 +11,5 @@ these files can be found in the [abb experimental repository](https://github.com
 contains the training environment scripts along with various reinforcement learning training alogrithms.
 
 the environment was built using [gym_gazebo repository](https://github.com/erlerobot/gym-gazebo)
+
+start the simulation by typing the following command in the terminal `roslaunch abb_irb120_training start_training.launch`
